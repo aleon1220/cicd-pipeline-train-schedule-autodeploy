@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKER_USER_NAME = "aleon1220"
         DOCKER_IMAGE_NAME = "${env.DOCKER_USER_NAME}/train-schedule"
+        CANARY_REPLICAS   = "0"
     }
     stages {
         stage('Build') {
@@ -94,9 +95,6 @@ pipeline {
         }
     }
     post {
-        environment {
-            CANARY_REPLICAS = 0
-        }
         cleanup {
             kubernetesDeploy (
                 kubeconfigId: 'kubeconfig',
